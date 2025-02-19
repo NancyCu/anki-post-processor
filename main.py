@@ -45,8 +45,8 @@ def random_style() -> str:
 def process_card(card: str) -> str:
     """
     Processes a single card string by:
-      1) Removing internal newlines.
-      2) Converting **bold** to <b>bold</b>.
+      1) Removing internal newlines/spaces,
+      2) Converting **bold** to <b>bold</b>,
       3) Wrapping the result in a <span> with a random inline style.
     """
     card = card.replace("\n", " ").strip()
@@ -56,8 +56,8 @@ def process_card(card: str) -> str:
 
 def enforce_single_line_cards(output: str) -> str:
     """
-    Splits the raw output by double newlines, processes each card,
-    and rejoins them so each card is on a separate line of HTML.
+    Splits the raw output by double newlines (each card separated by a blank line),
+    processes each card, and rejoins them so each card is on a separate line of HTML.
     """
     raw_cards = output.split("\n\n")
     processed_cards = [process_card(card) for card in raw_cards if card.strip()]
@@ -68,7 +68,9 @@ def process():
     data = request.get_json()
     raw_text = data.get("raw_text", "")
     processed_text = enforce_single_line_cards(raw_text)
-    return jsonify({"processed_text": processed_text})
+    # Wrap the processed text in triple backticks to display it as a code block
+    wrapped_output = "```\n" + processed_text + "\n```"
+    return jsonify({"processed_text": wrapped_output})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
