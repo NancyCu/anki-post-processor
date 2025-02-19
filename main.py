@@ -51,7 +51,7 @@ def process_card(card: str) -> str:
     """
     card = card.replace("\n", " ").strip()
     card = convert_markdown_bold(card)
-    style = random_style()
+#    style = random_style()
     return f'<span style="{style}">{card}</span>'
 
 def enforce_single_line_cards(output: str) -> str:
