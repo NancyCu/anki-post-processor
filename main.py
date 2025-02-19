@@ -33,14 +33,14 @@ def convert_markdown_bold(text: str) -> str:
     """
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
 
-def random_style() -> str:
-    """
-    Generates a random inline style string with color, font, and text-shadow.
-    """
-    color = random.choice(COLORS)
-    font = random.choice(FONTS)
-    shadow_color = random.choice(COLORS)
-    return f"color: {color}; font-family: {font}; text-shadow: 2px 2px 4px {shadow_color};"
+#def random_style() -> str:
+#    """
+#    Generates a random inline style string with color, font, and text-shadow.
+#    """
+#    color = random.choice(COLORS)
+#    font = random.choice(FONTS)
+#    shadow_color = random.choice(COLORS)
+#    return f"color: {color}; font-family: {font}; text-shadow: 2px 2px 4px {shadow_color};"
 
 def process_card(card: str) -> str:
     """
