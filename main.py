@@ -33,15 +33,15 @@ def convert_markdown_bold(text: str) -> str:
     """
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
 
-# Commented out the random_style function and its dependency on COLORS and FONTS
-# def random_style() -> str:
-#     """
-#     Generates a random inline style string with color, font, and text-shadow.
-#     """
-#     color = random.choice(COLORS)
-#     font = random.choice(FONTS)
-#     shadow_color = random.choice(COLORS)
-#     return f"color: {color}; font-family: {font}; text-shadow: 2px 2px 4px {shadow_color};"
+ Commented out the random_style function and its dependency on COLORS and FONTS
+ def random_style() -> str:
+     """
+     Generates a random inline style string with color, font, and text-shadow.
+     """
+     color = random.choice(COLORS)
+     font = random.choice(FONTS)
+     shadow_color = random.choice(COLORS)
+     return f"color: {color}; font-family: {font}; text-shadow: 2px 2px 4px {shadow_color};"
 
 def process_card(card: str) -> str:
     """
@@ -54,9 +54,9 @@ def process_card(card: str) -> str:
     """
     card = card.replace("\n", " ").strip()
     card = convert_markdown_bold(card)
-    # Commenting out the use of random_style
-    # style = random_style()
-    style = ""  # Default style (no random styling)
+     Commenting out the use of random_style
+     style = random_style()
+    style = ""   Default style (no random styling)
     return f'<span style="{style}">{card}</span>'
 
 def enforce_single_line_cards(output: str) -> str:
@@ -73,7 +73,7 @@ def process():
     data = request.get_json()
     raw_text = data.get("raw_text", "")
     processed_text = enforce_single_line_cards(raw_text)
-    # Wrap the processed text in triple backticks to display as a code block
+     Wrap the processed text in triple backticks to display as a code block
     wrapped_output = "```\n" + processed_text + "\n```"
     return jsonify({"processed_text": wrapped_output})
 
