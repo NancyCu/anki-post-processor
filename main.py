@@ -31,7 +31,7 @@ def convert_markdown_bold(text: str) -> str:
     """
     Converts markdown bold (**bold**) to HTML <b>bold</b>.
     """
-    return re.sub(r"\*\*(.+?)\*\*", r"<b>\\1</b>", text)
+    return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
 
 def random_style() -> str:
     """
@@ -45,9 +45,9 @@ def random_style() -> str:
 def process_card(card: str) -> str:
     """
     Processes a single card string by:
-      1) Removing internal newlines/spaces
-      2) Converting **bold** to <b>bold</b>
-      3) Wrapping the result in a <span> with a random inline style
+      1) Removing internal newlines.
+      2) Converting **bold** to <b>bold</b>.
+      3) Wrapping the result in a <span> with a random inline style.
     """
     card = card.replace("\n", " ").strip()
     card = convert_markdown_bold(card)
@@ -56,10 +56,10 @@ def process_card(card: str) -> str:
 
 def enforce_single_line_cards(output: str) -> str:
     """
-    Splits the raw output by line, processes each card,
-    and rejoins them so each card is on a single line of HTML.
+    Splits the raw output by double newlines, processes each card,
+    and rejoins them so each card is on a separate line of HTML.
     """
-    raw_cards = output.splitlines()
+    raw_cards = output.split("\n\n")
     processed_cards = [process_card(card) for card in raw_cards if card.strip()]
     return "\n".join(processed_cards)
 
@@ -71,7 +71,5 @@ def process():
     return jsonify({"processed_text": processed_text})
 
 if __name__ == "__main__":
-    # On Railway (or similar), PORT is set via an environment variable.
-    # Fallback to 8000 if not found.
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
